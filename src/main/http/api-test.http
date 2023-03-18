@@ -2,3 +2,13 @@
 GET http://localhost:8080/health-check
 Content-Type: application/json
 
+
+
+### Health-check QueryString
+GET http://localhost:8080/health-check?name=spring-server
+Content-Type: application/json
+
+
+### Users
+GET http://localhost:8080/users
+Content-Type: application/json
