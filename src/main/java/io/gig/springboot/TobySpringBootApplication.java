@@ -1,5 +1,6 @@
 package io.gig.springboot;
 
+import io.gig.springboot.controller.MainController;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -24,6 +25,10 @@ public class TobySpringBootApplication {
     public static void main(String[] args) {
         ServletWebServerFactory serverFactory = new TomcatServletWebServerFactory();
         WebServer webServer = serverFactory.getWebServer(servletContext -> {
+
+            MainController mainController = new MainController();
+
+
             servletContext.addServlet("frontcontroller", new HttpServlet() {
                 @Override
                 protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,9 +36,12 @@ public class TobySpringBootApplication {
                     // 인증, 보안, 다국어 처리 등 각종 공통 기능이 적용됨
                     if (req.getRequestURI().equals("/health-check") && req.getMethod().equals(HttpMethod.GET.name())) {
                         String name = req.getParameter("name");
+
+                        String result = mainController.healthCheck(name);
+
                         resp.setStatus(HttpStatus.OK.value());
                         resp.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.TEXT_PLAIN_VALUE);
-                        resp.getWriter().print("status OK " + name);
+                        resp.getWriter().print(result);
                     }
                     else if (req.getRequestURI().equals("/users")) {
                         resp.setStatus(HttpStatus.NOT_FOUND.value());
