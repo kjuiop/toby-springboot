@@ -4,7 +4,11 @@ Content-Type: application/json
 
 
 
-### Health-check
+### Health-check QueryString
 GET http://localhost:8080/health-check?name=spring-server
 Content-Type: application/json
 
+
+### Users
+GET http://localhost:8080/users
+Content-Type: application/json
