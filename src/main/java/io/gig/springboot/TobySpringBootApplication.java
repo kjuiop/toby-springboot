@@ -1,11 +1,11 @@
 package io.gig.springboot;
 
 import io.gig.springboot.controller.MainController;
+import io.gig.springboot.service.SimpleHelloService;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +30,8 @@ public class TobySpringBootApplication {
         GenericApplicationContext applicationContext = new GenericApplicationContext();
         // object 가 아닌 클래스 정보만 넘김
         applicationContext.registerBean(MainController.class);
+        // DI 주입은 어떻게 할까? , 빈을 등록하면 알아서 적용됨.
+        applicationContext.registerBean(SimpleHelloService.class);
         // bean object 를 생성함.
         applicationContext.refresh();
 
