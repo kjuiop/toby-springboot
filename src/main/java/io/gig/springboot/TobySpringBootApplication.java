@@ -1,5 +1,7 @@
 package io.gig.springboot;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -18,6 +20,10 @@ import org.springframework.web.servlet.DispatcherServlet;
 @ComponentScan
 public class TobySpringBootApplication {
 
+    // @Configuration 어노테이션
+    // @ComponentScan 어노테이션 ,
+    // Factory Method 를 가지고 스프링컨테이너에게 애플리케이션 구성을 어떻게 할지 알려주는 클래스
+    // args 인 실팽 파라미터도 넘겨준다.
     @Bean
     public ServletWebServerFactory serverFactory() {
         return new TomcatServletWebServerFactory();
@@ -29,28 +35,11 @@ public class TobySpringBootApplication {
     }
 
     public static void main(String[] args) {
-        AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext() {
 
-            @Override
-            protected void onRefresh() {
-                super.onRefresh();
+        // 우리가 지금까지 구현안 run 메서드는 결국 SpringApplication 의 run method
+        //  MySpringApplication.run(TobySpringBootApplication.class, args);
 
-                ServletWebServerFactory serverFactory = this.getBean(ServletWebServerFactory.class);
-                DispatcherServlet dispatcherServlet = this.getBean(DispatcherServlet.class);
-                // SpringContainer 가 dispatcherServlet 이 applicationContext 가 필요하다는 걸 알고 주입해준다.
-                // dispatcherServlet.setApplicationContext(this);
-
-                WebServer webServer = serverFactory.getWebServer(servletContext -> {
-                    servletContext.addServlet("dispatcherServlet", dispatcherServlet
-                    ).addMapping("/*");
-                });
-
-                webServer.start();
-            }
-        };
-
-        applicationContext.register(TobySpringBootApplication.class);
-        applicationContext.refresh();
+        SpringApplication.run(TobySpringBootApplication.class, args);
     }
 
 
@@ -59,6 +48,16 @@ public class TobySpringBootApplication {
 
 /**
  *
+ // @Configuration 어노테이션
+ // @ComponentScan 어노테이션 ,
+ // Factory Method 를 가지고 스프링컨테이너에게 애플리케이션 구성을 어떻게 할지 알려주는 클래스
+ // args 인 실팽 파라미터도 넘겨준다.
+ @Bean
+ public ServletWebServerFactory serverFactory() {
+ return new TomcatServletWebServerFactory();
+ }
+
+
  *
  // 이전에는 @Bean 을 선언하여 해당 메서드를 디스패처서블릿에 등록하였는데,
  // @Component 라는 어노테이션만 사용하면 @Bean 메서드를 일일이 등록할 필요 없이 전체 클래스가 등록된다.
