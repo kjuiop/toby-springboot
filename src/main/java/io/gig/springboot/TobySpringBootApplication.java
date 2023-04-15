@@ -1,15 +1,11 @@
 package io.gig.springboot;
 
-import io.gig.springboot.controller.MainController;
-import io.gig.springboot.service.HelloService;
-import io.gig.springboot.service.SimpleHelloService;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 
@@ -18,21 +14,14 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @date : 2023/03/12
  */
 @Configuration
+@ComponentScan
 public class TobySpringBootApplication {
 
-    // Object 로 구성할 객체를 생성할 때, HelloService 인터페이스를 찾아서 파라미터로 넣어줘
-    // 이걸 스프링컨테이너가 역할을 할 수 있도록 등록해줘야함
-    @Bean
-    public MainController helloController(HelloService helloService) {
-        return new MainController(helloService);
-    }
-
-    // 구현체를 직접 리턴하네??? 인터페이스 타입으로 리턴해야한다.
-    @Bean
-    public SimpleHelloService helloService() {
-        return new SimpleHelloService();
-    }
-
+    // 이전에는 @Bean 을 선언하여 해당 메서드를 디스패처서블릿에 등록하였는데,
+    // @Component 라는 어노테이션만 사용하면 @Bean 메서드를 일일이 등록할 필요 없이 전체 클래스가 등록된다.
+    // @ComponentScan 을 애플리케이션 쪽에 붙여놓으면 @Component 를 탐색해서 등록한다.
+    // 애플리케이션에서 사용되는 클래스가 무엇인지 일일이 탐색해야한다.
+    // 메타애노테이션은 애노테이션 위에 붙은 애노테이션이다.
     public static void main(String[] args) {
 
         // 스프링컨테이너를 대표하는 애플리케이션 컨텍스트,
@@ -72,6 +61,21 @@ public class TobySpringBootApplication {
         applicationContext.refresh();
     }
 }
+
+/**
+ *     // Object 로 구성할 객체를 생성할 때, HelloService 인터페이스를 찾아서 파라미터로 넣어줘
+ *     // 이걸 스프링컨테이너가 역할을 할 수 있도록 등록해줘야함
+ *     @Bean
+ *     public MainController helloController(HelloService helloService) {
+ *         return new MainController(helloService);
+ *     }
+ *
+ *     // 구현체를 직접 리턴하네??? 인터페이스 타입으로 리턴해야한다.
+ *     @Bean
+ *     public SimpleHelloService helloService() {
+ *         return new SimpleHelloService();
+ *     }
+ */
 
 
 
