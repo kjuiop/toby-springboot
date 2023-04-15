@@ -69,7 +69,7 @@ public class ContainerLessServletApplication {
                         String name = req.getParameter("name");
 
                         MainController mainController = applicationContext.getBean(MainController.class);
-                        String result = mainController.healthCheck(name);
+                        String result = mainController.hello(name);
                         // 직접 클래스를 의존하지 않고, 등록된 빈을 가져오는 방식으로 진행됨.
                         // String result = mainController.healthCheck(name);
 

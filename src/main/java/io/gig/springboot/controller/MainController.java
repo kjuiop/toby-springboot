@@ -14,7 +14,7 @@ public class MainController {
 
     private final HelloService helloService;
 
-    public String healthCheck(String name) {
+    public String hello(String name) {
         return helloService.sayHello(Objects.requireNonNull(name));
     }
 }
