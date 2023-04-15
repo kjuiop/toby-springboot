@@ -1,11 +1,11 @@
-### Health-check
-GET http://localhost:8080/health-check
+### Hello
+GET http://localhost:8080/hello
 Content-Type: application/json
 
 
 
-### Health-check QueryString
-GET http://localhost:8080/health-check?name=spring-server
+### Hello QueryString
+GET http://localhost:8080/hello?name=spring-server
 Content-Type: application/json
 
 
