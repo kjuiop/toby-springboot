@@ -1,6 +1,7 @@
 package io.gig.springboot.controller;
 
 import io.gig.springboot.service.HelloService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +22,11 @@ public class HelloController {
 
     @GetMapping("api/hello")
     public String hello(String name) {
-        return helloService.sayHello(Objects.requireNonNull(name));
+
+        if (!StringUtils.hasText(name)) {
+            throw new IllegalArgumentException();
+        }
+
+        return helloService.sayHello(name);
     }
 }
