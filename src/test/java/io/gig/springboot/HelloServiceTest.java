@@ -1,5 +1,6 @@
 package io.gig.springboot;
 
+import io.gig.springboot.service.HelloDecorator;
 import io.gig.springboot.service.SimpleHelloService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,5 +18,12 @@ public class HelloServiceTest {
         String ret = helloService.sayHello("Test");
 
         Assertions.assertThat(ret).isEqualTo("Hello Test");
+    }
+
+    @Test
+    void helloDecorator() {
+        HelloDecorator decorator = new HelloDecorator(name -> name);
+        String ret = decorator.sayHello("Test");
+        Assertions.assertThat(ret).isEqualTo("#Test#");
     }
 }
