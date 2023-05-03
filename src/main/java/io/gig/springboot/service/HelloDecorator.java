@@ -1,5 +1,6 @@
 package io.gig.springboot.service;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
  * @date : 2023/05/03
  */
 @Service
+@Primary
 public class HelloDecorator implements HelloService {
 
     private final HelloService helloService;
